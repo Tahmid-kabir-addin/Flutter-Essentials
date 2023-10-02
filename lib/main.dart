@@ -26,39 +26,63 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          alignment: Alignment.center,
-          height: 100,
-          width: 100,
-          clipBehavior: Clip.antiAlias,
-
-          // color: Colors.red,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(colors: [
-              Colors.red,
-              Colors.blueGrey,
-            ]),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 50,
-              )
-            ],
-            color: Colors.red,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text(
-            'Hello World!',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+      body: Container(
+        // height: 1000,
+        width: 500,
+        color: Colors.green,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 10),
+              height: 50,
+              width: 100,
+              // color: Colors.red,
+              decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 50,
+                    )
+                  ]
+              ),
             ),
-          ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              height: 50,
+              width: 100,
+              // color: Colors.yellow,
+              decoration: const BoxDecoration(
+                  color: Colors.yellow,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 50,
+                    )
+                  ]
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              height: 50,
+              width: 100,
+              // color: Colors.blue,
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 50,
+                  )
+                ]
+              ),
+            ),
+          ],
         ),
+
       ),
     );
   }
