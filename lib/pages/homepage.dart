@@ -52,13 +52,17 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: data != null
-          ? ListView.builder(itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(data[index]["title"]),
-                subtitle: Text("ID: ${data[index]["id"]}"),
-                leading: Image.network(data[index]["url"]),
-              );
-            })
+          ? GridView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(data[index]["title"]),
+                  subtitle: Text("ID: ${data[index]["id"]}"),
+                  leading: Image.network(data[index]["url"]),
+                );
+              },
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ))
           : const Center(child: CircularProgressIndicator()),
       drawer: MyDrawer(),
       floatingActionButton: FloatingActionButton(
