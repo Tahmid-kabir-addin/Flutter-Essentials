@@ -37,6 +37,11 @@ class _HomePageState extends State<HomePage> {
     return data;
   }
 
+  Stream<List<String>> streamData() {
+    return Stream<List<String>>.fromIterable(
+        [List<String>.generate(20, (index) => "Item $index")]);
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -63,8 +68,8 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.exit_to_app))
         ],
       ),
-      body: FutureBuilder(
-        future: fetchData(),
+      body: StreamBuilder(
+        stream: streamData(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -80,13 +85,12 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.hasError) {
                 return const Center(child: Text("Error Occurred!"));
               } else {
-                return ListView.builder(itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data[index]["title"]),
-                    subtitle: Text("ID: ${snapshot.data[index]["id"]}"),
-                    leading: Image.network(snapshot.data[index]["url"]),
-                  );
-                });
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                          title: Text(snapshot.data![index]));
+                    });
               }
             case ConnectionState.active:
               return const Center(
