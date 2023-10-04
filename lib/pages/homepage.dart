@@ -2,6 +2,8 @@ import 'dart:convert';
 import "dart:developer" as dev;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:teest/pages/login_page.dart';
+import 'package:teest/utils/constants.dart';
 import '../drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,7 +54,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.exit_to_app))
+          IconButton(onPressed: (){
+            Navigator.pushReplacementNamed(context, LoginPage.routeName);
+            Constants.prefs.setBool('loggedIn', false);
+            }, icon: Icon(Icons.exit_to_app))
         ],
       ),
       body: data != null
