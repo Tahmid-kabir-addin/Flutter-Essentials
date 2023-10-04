@@ -3,10 +3,11 @@ import "dart:developer" as dev;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../drawer.dart';
-import '../name_card_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  static const String routeName = "/home";
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -50,6 +51,9 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.exit_to_app))
+        ],
       ),
       body: data != null
           ? GridView.builder(

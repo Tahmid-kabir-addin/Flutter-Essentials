@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teest/pages/homepage.dart';
+import 'package:teest/pages/login_page.dart';
 
 void main() {
   //WidgetsApp //MaterialApp // CupertinoApp
@@ -15,10 +16,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomePage(),
+      // home: const HomePage(),
+      home: LoginPage(),
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.blue),
       ),
+      routes: {
+        LoginPage.routeName: (context) => LoginPage(),
+        HomePage.routeName: (context) => HomePage()
+      },
     );
   }
 }
