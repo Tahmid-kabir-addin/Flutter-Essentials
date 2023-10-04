@@ -1,5 +1,4 @@
 import 'dart:convert';
-import "dart:developer" as dev;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:teest/pages/login_page.dart';
@@ -26,14 +25,16 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchData();
+    // fetchData();
   }
 
-  void fetchData() async {
+  Future fetchData() async {
     var res = await http.get(url);
-    data = jsonDecode(res.body);
+    var data = jsonDecode(res.body);
     // dev.log(data.toString(),name: 'tahmid');
-    setState(() {});
+    // setState(() {});
+    // print(data);
+    return data;
   }
 
   @override
@@ -54,25 +55,47 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(onPressed: (){
-            Navigator.pushReplacementNamed(context, LoginPage.routeName);
-            Constants.prefs.setBool('loggedIn', false);
-            }, icon: Icon(Icons.exit_to_app))
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                Constants.prefs.setBool('loggedIn', false);
+              },
+              icon: const Icon(Icons.exit_to_app))
         ],
       ),
-      body: data != null
-          ? GridView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(data[index]["title"]),
-                  subtitle: Text("ID: ${data[index]["id"]}"),
-                  leading: Image.network(data[index]["url"]),
-                );
-              },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ))
-          : const Center(child: CircularProgressIndicator()),
+      body: FutureBuilder(
+        future: fetchData(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return const Center(
+                child: Text("Fetch Something"),
+              );
+
+            case ConnectionState.waiting:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return const Center(child: Text("Error Occurred!"));
+              } else {
+                return ListView.builder(itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(snapshot.data[index]["title"]),
+                    subtitle: Text("ID: ${snapshot.data[index]["id"]}"),
+                    leading: Image.network(snapshot.data[index]["url"]),
+                  );
+                });
+              }
+            case ConnectionState.active:
+              return const Center(
+                child: Text("Nothing"),
+              );
+          }
+        },
+      ),
+
       drawer: MyDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
